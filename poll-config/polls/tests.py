@@ -45,11 +45,15 @@ class QuestionIndexVIewTest(TestCase):
 
     def test_past_question(self):
         """
-        Question with a pub_date in the past are displayed on index page.
+        Questions with a pub_date in the past are displayed on the
+        index page.
         """
-        question = create_question(question_text="Past Question.", days=-30)
+        question = create_question(question_text="Past question.", days=-30)
         response = self.client.get(reverse("polls:index"))
-        self.assertQuerySetEqual(response.context["latest_questions_list"], [Question])
+        self.assertQuerySetEqual(
+            response.context["latest_question_list"],
+            [question],
+        )
 
     def test_failure_question_and_past_question(self):
         question = create_question(question_text="Past question.", days=-30)
