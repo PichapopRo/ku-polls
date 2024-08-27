@@ -17,7 +17,7 @@ To be added.
 
 ## Project Documents
 
-All project documents are in the [Project Wiki](https://github.com/PichapopRo/ku-polls/wiki).
+All project documents are in the [Project Wiki](../../wiki/Vision%20Statement).
 
 - [Vision Statement](../../wiki/Vision%20Statement)
 - [Requirements](../../wiki/Requirements)
