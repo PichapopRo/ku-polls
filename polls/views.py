@@ -37,26 +37,6 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
-    if not question.is_published():
-        return render(
-            request,
-            "polls/detail.html",
-            {
-                "question": question,
-                "error_message": "This question is not published yet.",
-            },
-        )
-
-    if not question.can_vote():
-        return render(
-            request,
-            "polls/detail.html",
-            {
-                "question": question,
-                "error_message": "Voting is not allowed for this question.",
-            },
-        )
-
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
