@@ -9,11 +9,33 @@ https://cpske.github.io/ISP) course at [Kasetsart University](https://www.ku.ac.
 
 ## Installation
 
-To be added. If the procedure is long, put it in the wiki or a separate file.
+1. Clone directory
+```
+git clone https://github.com/PichapopRo/ku-polls.git 
+```
+2. Change directory to ku-polls
+```
+cd ku-polls
+```
+3. Install requirements
+```
+pip install -r requirements.txt
+```
+
 
 ## Running the Application
-
-To be added.
+1. Migrate
+```
+python manage.py migrate
+```
+2. Load data
+```
+python manage.py loaddata data/polls-v1
+```
+3. Runserver
+```
+python manage.py runserver
+```
 
 ## Project Documents
 
