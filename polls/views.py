@@ -31,7 +31,8 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, *args, **kwargs):
-        """ Check weather it can vote or not if it cannot vote return error message"""
+        """ Check weather it can vote or not if it cannot vote return error
+        message"""
         question = self.get_object()
         if not question.can_vote():
             messages.error(request, "Voting is not allowed for this poll.")
