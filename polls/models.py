@@ -12,14 +12,17 @@ class Question(models.Model):
     end_date = models.DateField(null=True, blank=True)
 
     def was_published_recently(self):
+        """ Check whether this question has been published recently. """
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
     def is_published(self):
+        """ Check whether this question has been published """
         now = timezone.now()
         return now >= self.pub_date
 
     def can_vote(self):
+        """ Check whether this question can be voted """
         now = timezone.now()
         if self.end_date is None:
             return self.pub_date <= now
