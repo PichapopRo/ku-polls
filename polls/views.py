@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from django.contrib import messages
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
@@ -32,7 +32,8 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, *args, **kwargs):
-        """ Check weather it can vote or not if it cannot vote return error message"""
+        """ Check weather it can vote or not if it cannot vote return error
+        message"""
         question = self.get_object()
         if not question.can_vote():
             messages.error(request, "Voting is not allowed for this poll.")
@@ -61,7 +62,21 @@ def vote(request, question_id):
                 "error_message": "You didn't select a choice.",
             },
         )
-    else:
-        selected_choice.votes = F("votes") + 1
-        selected_choice.save()
-        return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+    # Reference to the user
+    this_user = request.user
+    # Get user's vote
+    try:
+        # vote = this_user.vote_set.get(choice__question=question)
+        vote = Vote.objects.get(user=this_user, choice__question=question)
+        # User has a vote for this question! Update his choice.
+        vote.choice = selected_choice
+        vote.save()
+        messages.success(request, f"Your vote was updated to '{selected_choice.choice_text}'")
+    except Vote.DoesNotExist:
+        vote = Vote.objects.create(user=this_user, choice=selected_choice)
+        # Does not have to vote yet
+        # Auto save
+        messages.success(request, f"Your voted for '{selected_choice.choice_text}'")
+    selected_choice.votes = F("votes") + 1
+    selected_choice.save()
+    return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
