@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.contrib import messages
 from .models import Choice, Question
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 
 class IndexView(generic.ListView):
@@ -45,6 +46,7 @@ class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
 
 
+@login_required
 def vote(request, question_id):
     """ handle voting on a question """
     question = get_object_or_404(Question, pk=question_id)
