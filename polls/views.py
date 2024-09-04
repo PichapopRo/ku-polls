@@ -8,6 +8,8 @@ from django.contrib import messages
 from .models import Choice, Question, Vote
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
 
 class IndexView(generic.ListView):
@@ -64,6 +66,8 @@ def vote(request, question_id):
         )
     # Reference to the user
     this_user = request.user
+    print("current user is", this_user.id, "login", this_user.username)
+    print("Real name:", this_user.first_name, this_user.last_name)
     # Get user's vote
     try:
         # vote = this_user.vote_set.get(choice__question=question)
@@ -77,6 +81,24 @@ def vote(request, question_id):
         # Does not have to vote yet
         # Auto save
         messages.success(request, f"Your voted for '{selected_choice.choice_text}'")
-    selected_choice.votes = F("votes") + 1
-    selected_choice.save()
     return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
+
+
+def signup(request):
+    """Register a new user."""
+    if request.method == 'POST':
+        form = UserCreationForm(request.post)
+        if form.is_valid():
+            form.save()
+            # get named field from the form data
+            username = form.cleaned_data.get('username')
+            # password input field is named 'password1'
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('polls:index')
+        # What if form is not valid?
+        # we should display a message in signup.html
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
