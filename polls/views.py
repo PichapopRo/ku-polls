@@ -18,7 +18,8 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return Question.objects.filter(pub_date__lte=timezone.now()).order_by("-pub_date")[
+        return Question.objects.filter(pub_date__lte=timezone.now()).order_by(
+            "-pub_date")[
                :5
                ]
 
@@ -75,19 +76,21 @@ def vote(request, question_id):
         # User has a vote for this question! Update his choice.
         vote.choice = selected_choice
         vote.save()
-        messages.success(request, f"Your vote was updated to '{selected_choice.choice_text}'")
+        messages.success(request,
+                         f"Your vote was updated to '{selected_choice.choice_text}'")
     except Vote.DoesNotExist:
         vote = Vote.objects.create(user=this_user, choice=selected_choice)
         # Does not have to vote yet
         # Auto save
-        messages.success(request, f"Your voted for '{selected_choice.choice_text}'")
+        messages.success(request,
+                         f"Your voted for '{selected_choice.choice_text}'")
     return HttpResponseRedirect(reverse("polls:results", args=(question.id,)))
 
 
 def signup(request):
     """Register a new user."""
     if request.method == 'POST':
-        form = UserCreationForm(request.post)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             # get named field from the form data
