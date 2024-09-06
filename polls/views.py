@@ -8,8 +8,14 @@ from django.contrib import messages
 from .models import Choice, Question, Vote
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
+import logging
+from django.contrib.auth.signals import user_logged_in, user_logged_out, \
+    user_login_failed
+from django.dispatch import receiver
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -57,6 +63,7 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST["choice"])
     except (KeyError, Choice.DoesNotExist):
+        logger.error("An error occurred while updating the vote")
         return render(
             request,
             "polls/detail.html",
@@ -69,6 +76,7 @@ def vote(request, question_id):
     this_user = request.user
     print("current user is", this_user.id, "login", this_user.username)
     print("Real name:", this_user.first_name, this_user.last_name)
+    logger.info('User has submitted a vote')
     # Get user's vote
     try:
         # vote = this_user.vote_set.get(choice__question=question)
@@ -79,6 +87,7 @@ def vote(request, question_id):
         messages.success(request,
                          f"Your vote was updated to '{selected_choice.choice_text}'")
     except Vote.DoesNotExist:
+        logger.error("An error occurred while updating the vote")
         vote = Vote.objects.create(user=this_user, choice=selected_choice)
         # Does not have to vote yet
         # Auto save
@@ -105,3 +114,19 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+@receiver(user_logged_in)
+def log_user_login(sender, request, user, **kwargs):
+    logger.info(f"User {user.username} logged in")
+
+
+@receiver(user_logged_out)
+def log_user_logout(sender, request, user, **kwargs):
+    logger.info(f"User {user.username} logged out")
+
+
+@receiver(user_login_failed)
+def log_unsuccessful_login(sender, credentials, request, **kwargs):
+    logger.warning(
+        f"Unsuccessful login attempt for username: {credentials.get('username')}")

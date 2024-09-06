@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from decouple import config, Csv
 from pathlib import Path
 import logging
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -100,28 +101,38 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGGING = {
+
     "version": 1,  # the dictConfig format version
     "disable_existing_loggers": False,  # retain the default loggers
-    "handlers": {
-        "file": {
-            "class": "logging.FileHandler",
-            "filename": "polls.log",
-            "formatter": "verbose",
+    "level": "DEBUG",
+
+    "loggers": {
+        "polls": {
+            "handlers": ["file"],
             "level": "DEBUG",
-        },
-    },
-    "formatters": {
-        "verbose": {
-            "format": "{name} {levelname} {asctime} {module} {process:d} {"
-                      "thread:d} {message}",
-            "style": "{",
-        },
-        "simple": {
-            "format": "{levelname} {message}",
-            "style": "{",
+            "propagate": True,
         },
     },
 
+    "formatters": {
+            "verbose": {
+                "format": "{name} {levelname} {asctime} {module} {process:d} {thread:d} {message}",
+                "style": "{",
+            },
+            "simple": {
+                "format": "{levelname} {message}",
+                "style": "{",
+            },
+        },
+
+    "handlers": {
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "level": "DEBUG",
+            "formatter": "verbose",
+        },
+      },
 }
 
 # Internationalization
