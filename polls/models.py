@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField(timezone.now)
+    pub_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateField(null=True, blank=True)
 
     def was_published_recently(self):
@@ -50,4 +50,3 @@ class Vote(models.Model):
     """A vote by a user for a choice in a poll"""
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-

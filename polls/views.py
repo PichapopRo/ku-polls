@@ -118,7 +118,8 @@ def signup(request):
 
 @receiver(user_logged_in)
 def log_user_login(sender, request, user, **kwargs):
-    logger.info(f"User {user.username} logged in")
+    ip_add = get_client_ip(request)
+    logger.info(f"User {user.username} logged in. IP: {ip_add}")
 
 
 @receiver(user_logged_out)
@@ -130,3 +131,13 @@ def log_user_logout(sender, request, user, **kwargs):
 def log_unsuccessful_login(sender, credentials, request, **kwargs):
     logger.warning(
         f"Unsuccessful login attempt for username: {credentials.get('username')}")
+
+
+def get_client_ip(request):
+    """Get the visitor’s IP address using request headers."""
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
