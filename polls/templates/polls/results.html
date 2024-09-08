@@ -16,3 +16,11 @@
 
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <p><a href="{% url 'polls:index' %}">Back to List of Polls</a></p>
+<footer>
+    {% if user.is_authenticated %} 
+    <form action="{% url 'logout' %}" method="post" class="logout-button">
+   {% csrf_token %}
+  <button type="submit">Log Out</button>
+</form>
+    {% endif %}
+</footer>
