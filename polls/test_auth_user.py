@@ -11,6 +11,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate  # to "login" a user using code
 from polls.models import Question, Choice
 from mysite import settings
+from django.http import HttpResponse
+from django.test import Client
+
+
+def user_vote(client: Client, choice: Choice):
+    response = client.post(reverse("polls:vote", args=(choice.question_id,)),
+                           {"choice": choice.id})
 
 
 class UserAuthTest(django.test.TestCase):
@@ -69,7 +76,6 @@ class UserAuthTest(django.test.TestCase):
         response = self.client.get(login_url)
         self.assertEqual(200, response.status_code)
         # Can login using a POST request
-        # usage: client.post(url, {'key1":"value", "key2":"value"})
         form_data = {"username": "testuser",
                      "password": "FatChance!"
                      }
@@ -99,4 +105,99 @@ class UserAuthTest(django.test.TestCase):
         # the query parameter ?next=/polls/1/vote/
         login_with_next = f"{reverse('login')}?next={vote_url}"
         self.assertRedirects(response, login_with_next)
-        self.assertRedirects(response, login_with_next)
+
+    def test_registration(self):
+        # Post data to the registration form
+        registration_data = {
+            'username': 'newuser',
+            'password1': 'complexpassword',
+            'password2': 'complexpassword',
+        }
+        response = self.client.post(reverse('signup'), registration_data)
+        self.assertEqual(response.status_code, 302)
+        new_user = User.objects.get(username='newuser')
+        self.assertIsNotNone(new_user)
+
+    def test_user_can_login_after_registration(self):
+        """Test that a new user can log in after registering."""
+        registration_data = {
+            'username': 'newuser',
+            'password1': 'newstrongpassword123',
+            'password2': 'newstrongpassword123',
+        }
+        self.client.post(reverse('signup'), registration_data)
+        login_data = {
+            'username': 'newuser',
+            'password': 'newstrongpassword123',
+        }
+        response = self.client.post(reverse('login'), login_data)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.wsgi_request.user.is_authenticated)
+
+
+class VoteTests(django.test.TestCase):
+
+    def setUp(self):
+        # Create a test user and log them in
+        self.user1 = User.objects.create_user(username='testuser1',
+                                              password='testpassword')
+        self.client.force_login(self.user1)
+
+        # Create a test question and two choices
+        self.question = Question.objects.create(question_text="Test question",
+                                                pub_date="2023-09-01")
+        self.choice1 = Choice.objects.create(choice_text="Choice 1",
+                                             question=self.question)
+        self.choice2 = Choice.objects.create(choice_text="Choice 2",
+                                             question=self.question)
+
+    def test_user_can_vote_only_once(self):
+        """A user can vote on only one choice."""
+        vote_url = reverse('polls:vote', args=[self.question.id])
+
+        # User votes for choice1
+        response = self.client.post(vote_url, {'choice': self.choice1.id})
+        self.assertEqual(response.status_code, 302)  # Redirect after voting
+
+        # Check that choice1 gets 1 vote and choice2 gets 0 votes
+        self.choice1.refresh_from_db()
+        self.choice2.refresh_from_db()
+        self.assertEqual(self.choice1.votes, 1)
+        self.assertEqual(self.choice2.votes, 0)
+
+        # User changes vote to choice2
+        response = self.client.post(vote_url, {'choice': self.choice2.id})
+        self.assertEqual(response.status_code, 302)  # Redirect after voting
+
+        # Check that choice1 has 0 votes and choice2 has 1 vote
+        self.choice1.refresh_from_db()
+        self.choice2.refresh_from_db()
+        self.assertEqual(self.choice1.votes, 0)
+        self.assertEqual(self.choice2.votes, 1)
+
+
+class UnauthenticatedVoteTest(django.test.TestCase):
+
+    def setUp(self):
+        # Create a test question and choices
+        self.question = Question.objects.create(question_text="Test question",
+                                                pub_date="2023-09-01")
+        self.choice1 = Choice.objects.create(choice_text="Choice 1",
+                                             question=self.question)
+        self.choice2 = Choice.objects.create(choice_text="Choice 2",
+                                             question=self.question)
+
+    def test_unauthenticated_user_cannot_vote(self):
+        """An unauthenticated user should be redirected to the login page when attempting to vote."""
+        vote_url = reverse('polls:vote', args=[self.question.id])
+
+        # Attempt to vote without logging in
+        response = self.client.post(vote_url, {'choice': self.choice1.id})
+
+        # Check that the response redirects to the login page
+        expected_login_url = f"{reverse('login')}?next={vote_url}"
+        self.assertRedirects(response, expected_login_url)
+
+        # Ensure that the vote was not counted
+        self.choice1.refresh_from_db()
+        self.assertEqual(self.choice1.votes, 0)
