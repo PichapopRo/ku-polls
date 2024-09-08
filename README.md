@@ -44,5 +44,7 @@ All project documents are in the [Project Wiki](../../wiki/Home).
 - [Vision Statement](../../ku-polls/wiki/Vision-and-Scope)
 - [Requirements](../../ku-polls/wiki/Requirements)
 - [Project Plan](../../ku-polls/wiki/Project-Plan)
+- [Domain Model Diagram](../../ku-polls/wiki/Domain-Model-Diagram)
 - [Iteration 1 Plan](../../ku-polls/wiki/Iteration-1-Plan)
 - [Iteration 2 Plan](../../ku-polls/wiki/iteration-2-Plan)
+- [Iteration 3 Plan](../../ku-polls/wiki/Iteration-3-Plan)
