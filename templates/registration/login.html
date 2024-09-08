@@ -1,0 +1,23 @@
+<html>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/login_style.css' %}">
+
+<body>
+<h2 class="login-heading">Login</h2>
+{% if messages %}
+{% for msg in messages %}
+<p class="{{msg.tags}}">{{msg}}</p>
+{% endfor %}
+{% endif %}
+<form method="POST" class="login-form">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <p>
+  <button type="submit" class="login-button">Login</button>
+  </p>
+  <input type="hidden" name="next" value="{{next}}"/>
+ </form>
+ <p class="signup-text">Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+</body>
+</html>
