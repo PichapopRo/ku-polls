@@ -42,6 +42,7 @@ python manage.py runserver
 
 All project documents are in the [Project Wiki](../../wiki/Home).
 
+
 - [Vision Statement](../../ku-polls/wiki/Vision-and-Scope)
 - [Requirements](../../ku-polls/wiki/Requirements)
 - [Project Plan](../../ku-polls/wiki/Project-Plan)
