@@ -1,4 +1,3 @@
-from django.db.models import F
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
@@ -14,6 +13,8 @@ import logging
 from django.contrib.auth.signals import user_logged_in, user_logged_out, \
     user_login_failed
 from django.dispatch import receiver
+from django.http import Http404
+
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = "latest_question_list"
+    ordered_questions = Question.objects.order_by('-created_date')
 
     def get_queryset(self):
         """Return the last five published questions."""
@@ -41,13 +43,22 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
     def get(self, request, *args, **kwargs):
-        """ Check weather it can vote or not if it cannot vote return error
-        message"""
-        question = self.get_object()
+        """
+        Override the get method to handle invalid poll IDs and voting logic.
+        """
+        try:
+            # Try to get the object. If it doesn't exist, it will raise
+            # Http404.
+            question = self.get_object()
+        except Http404:
+            messages.error(request, "The requested poll does not exist.")
+            return redirect('polls:index')
+
         if not question.can_vote():
             messages.error(request, "Voting is not allowed for this poll.")
             return redirect('polls:index')
 
+        # If everything is fine, proceed to the default behavior.
         return super().get(request, *args, **kwargs)
 
 
