@@ -8,7 +8,7 @@
 import django.test
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate  # to "login" a user using code
+from django.contrib.auth import authenticate
 from polls.models import Question, Choice
 from mysite import settings
 from django.http import HttpResponse
