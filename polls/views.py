@@ -42,6 +42,22 @@ class DetailView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        question = self.get_object()
+
+        # Get the current user's vote for this question, if it exists
+        if self.request.user.is_authenticated:
+            try:
+                vote = Vote.objects.get(user=self.request.user,
+                                        choice__question=question)
+                context[
+                    'user_vote'] = vote.choice.id
+            except Vote.DoesNotExist:
+                context['user_vote'] = None
+
+        return context
+
     def get(self, request, *args, **kwargs):
         """
         Override the get method to handle invalid poll IDs and voting logic.
