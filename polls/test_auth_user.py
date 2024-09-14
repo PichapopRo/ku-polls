@@ -1,30 +1,21 @@
-"""Tests of user authentication.
+"""
+Tests of user authentication.
 
-   Put this file in a subdirectory of your ku-polls project,
-   for example, a directory named "auth".
-   Then run: manage.py test auth
-
+Put this file in a subdirectory of your ku-polls project,
+for example, a directory named "auth". Then run: manage.py test auth
 """
 import django.test
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate  # to "login" a user using code
 from polls.models import Question, Choice
 from mysite import settings
-from django.http import HttpResponse
-from django.test import Client
-
-
-def user_vote(client: Client, choice: Choice):
-    response = client.post(reverse("polls:vote", args=(choice.question_id,)),
-                           {"choice": choice.id})
 
 
 class UserAuthTest(django.test.TestCase):
+    """Test case for user authentication."""
 
     def setUp(self):
-        # superclass setUp creates a Client object and initializes test
-        # database
+        """Set up for Client object and initializes the test database."""
         super().setUp()
         self.username = "testuser"
         self.password = "FatChance!"
@@ -107,7 +98,7 @@ class UserAuthTest(django.test.TestCase):
         self.assertRedirects(response, login_with_next)
 
     def test_registration(self):
-        # Post data to the registration form
+        """Post data to the registration form."""
         registration_data = {
             'username': 'newuser',
             'password1': 'complexpassword',
@@ -136,9 +127,10 @@ class UserAuthTest(django.test.TestCase):
 
 
 class VoteTests(django.test.TestCase):
+    """Vote test cases."""
 
     def setUp(self):
-        # Create a test user and log them in
+        """Set up the test Voting."""
         self.user1 = User.objects.create_user(username='testuser1',
                                               password='testpassword')
         self.client.force_login(self.user1)
@@ -177,9 +169,10 @@ class VoteTests(django.test.TestCase):
 
 
 class UnauthenticatedVoteTest(django.test.TestCase):
+    """Test case for unauthenticated vote."""
 
     def setUp(self):
-        # Create a test question and choices
+        """Create a test question and choices."""
         self.question = Question.objects.create(question_text="Test question",
                                                 pub_date="2023-09-01")
         self.choice1 = Choice.objects.create(choice_text="Choice 1",
@@ -188,7 +181,7 @@ class UnauthenticatedVoteTest(django.test.TestCase):
                                              question=self.question)
 
     def test_unauthenticated_user_cannot_vote(self):
-        """An unauthenticated user should be redirected to the login page when attempting to vote."""
+        """A visitor redirected to the login when trying to vote."""
         vote_url = reverse('polls:vote', args=[self.question.id])
 
         # Attempt to vote without logging in

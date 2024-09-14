@@ -2,9 +2,15 @@ name: Django CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "**" ]
   pull_request:
     branches: [ "main" ]
+
+env:
+  DEBUG: True
+  ALLOWED_HOST: '*'
+  TIME_ZONE: 'Asia/Bangkok'
+  SECRET_KEY: ${{secrets.SECRET_KEY}}
 
 jobs:
   build:

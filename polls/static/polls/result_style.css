@@ -14,6 +14,12 @@ body {
     background: url("images/background1.jpg") no-repeat center;
 }
 
+h1 {
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
 .wrapper {
     width: 80%;
     max-width: 800px;
@@ -25,66 +31,18 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-h1 {
-    text-align: center;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
     margin-bottom: 20px;
-    color: #ffffff
 }
 
-h4 {
-    margin-bottom: 20px;
-    color: #ffffff
-}
-.wrapper p {
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc;
     color: white;
-    font-weight: 600;
-    text-decoration: none;
-}
-
-.login-message {
-    text-align: center;
-    margin-bottom: 15px;
-    color: white;
-}
-
-.login-link {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #ffffff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.question-list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.question-list li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-.question-list li a {
-    text-decoration: none;
-    color: #ffffff;
-}
-
-.question-list li button {
-    background: transparent;
-    color: #1b1b1b;
-    border: 2px solid rgba(255, 255, 255, .2);
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-weight: 600;
 }
 
 .logout-button {
@@ -107,4 +65,23 @@ h4 {
 
 .logout-button button:hover {
     background-color: #ffffff;
+}
+
+.back-to-list-poll-button {
+    background-color: transparent;
+    color: black;
+    border: 2px solid rgba(255, 255, 255, .2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    bottom: 20px;
+    right: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-list-poll-button a {
+    text-decoration: none;
+    color: #ffffff;
 }

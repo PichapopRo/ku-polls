@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppings", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background: url("images/background1.jpg") no-repeat center;
+}
+
+h1 {
+    color: white;
+    padding: 20px;
+}
+
+.wrapper {
+    width: 80%;
+    max-width: 800px;
+    background: transparent;
+    padding: 30px 40px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.choice-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.choice-list li {
+  margin-bottom: 15px;
+}
+
+.choice-list li input[type="radio"]:checked + label {
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  color: black;
+  padding: 5px;
+}
+
+.back-to-list-poll-button {
+    background-color: transparent;
+    color: black;
+    border: 2px solid rgba(255, 255, 255, .2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-list-poll-button a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.result-button {
+    background-color: transparent;
+    color: black;
+    border: 2px solid rgba(255, 255, 255, .2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 20px;
+    right: 190px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.result-button a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.vote-button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, .2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    bottom: 20px;
+    left: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.selected-choice p {
+    color: white;
+    padding: 20px;
+}
+
+.logout-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+.logout-button button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, .2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button button:hover {
+    background-color: #ffffff;
+}
