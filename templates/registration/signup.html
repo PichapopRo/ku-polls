@@ -1,13 +1,25 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/register_style.css' %}">
+<body>
+<div class="wrapper">
 <h2>Register</h2>
 <form method="POST">
     {% csrf_token %}
-    <table style="padding: 2ex;">
-    {{ form.as_table }}     {# this line shows the sign-up form #}
-    <tr>
-    <td colspan="2">
-    <button type="submit">Register</button>
-        <p><a href="{% url 'polls:index' %}">Back to List of Polls</a></p>
-    </td>
-    </tr>
+    <table>
+        {{ form.as_table }}
+        <tr>
+            <td colspan="2">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <button type="submit" class="register-button">Register</button>
+                <button type="submit" class="back-to-list-poll-button">
+                    <a href="{% url 'polls:index' %}">Back to list Polls </a>
+                </button>
+            </td>
+        </tr>
     </table>
 </form>
+</div>
+</body>
