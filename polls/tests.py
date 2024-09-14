@@ -1,3 +1,4 @@
+"""Import the essential package for testing."""
 import datetime
 from django.test import TestCase
 from django.utils import timezone
@@ -6,17 +7,16 @@ from django.urls import reverse
 from .models import Question
 
 
-# Create your tests here.
-
 class QuestionModelTests(TestCase):
+    """Tests for Question model."""
     def test_was_published_recently_with_future_question(self):
-        """test if question was published in the future"""
+        """Test if question was published in the future."""
         time = timezone.now() + datetime.timedelta(days=30)
         future_question = Question(pub_date=time)
         self.assertFalse(future_question.was_published_recently())
 
     def test_was_published_recently_with_old_question(self):
-        """ test if question was published in the past"""
+        """Test if question was published in the past."""
         time = timezone.now() - datetime.timedelta(days=1, seconds=1)
         old_question = Question(pub_date=time)
         self.assertFalse(old_question.was_published_recently())
