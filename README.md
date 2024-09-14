@@ -1,6 +1,7 @@
 ## KU Polls: Online Survey Questions 
 [![Django CI](https://github.com/PichapopRo/ku-polls/actions/workflows/django.yml/badge.svg)](https://github.com/PichapopRo/ku-polls/actions/workflows/django.yml)
 [![CI Flake8](https://github.com/PichapopRo/ku-polls/actions/workflows/CI-Flake8.yml/badge.svg)](https://github.com/PichapopRo/ku-polls/actions/workflows/CI-Flake8.yml)
+
 An application to conduct online polls and surveys based
 on the [Django Tutorial project](https://docs.djangoproject.com/en/5.1/intro/tutorial01/), with
 additional features.
