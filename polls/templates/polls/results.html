@@ -1,3 +1,7 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/result_style.css' %}">
+<body>
+<div class="wrapper">
 {% if messages %}
 <ul class="messages">
   {% for msg in messages %}
@@ -23,10 +27,11 @@
         {% endfor %}
     </tbody>
 </table>
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
-<p><a href="{% url 'polls:index' %}">Back to List of Polls</a></p>
+<button type="submit" class="back-to-list-poll-button">
+    <a href="{% url 'polls:index' %}">Back to list Polls </a>
+        </button>
+</div>
+</body>
 <footer>
     {% if user.is_authenticated %} 
     <form action="{% url 'logout' %}" method="post" class="logout-button">

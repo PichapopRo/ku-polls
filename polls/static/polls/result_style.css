@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppings", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: cover;
+    background: url("images/background1.jpg") no-repeat center;
+}
+
+h1 {
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.wrapper {
+    width: 80%;
+    max-width: 800px;
+    background: transparent;
+    padding: 30px 40px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ccc;
+    color: white;
+}
+
+.logout-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+}
+
+.logout-button button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, .2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.logout-button button:hover {
+    background-color: #ffffff;
+}
+
+.back-to-list-poll-button {
+    background-color: transparent;
+    color: black;
+    border: 2px solid rgba(255, 255, 255, .2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    bottom: 20px;
+    right: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-list-poll-button a {
+    text-decoration: none;
+    color: #ffffff;
+}
