@@ -1,11 +1,92 @@
-li a {
-    color: lightskyblue;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppings", sans-serif;
 }
+
 body {
-    background: white url("images/background.png") no-repeat center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     background-size: cover;
-    font-family: sans-serif;
+    background: url("images/background1.jpg") no-repeat center;
 }
+
+.wrapper {
+    width: 80%;
+    max-width: 800px;
+    background: transparent;
+    padding: 30px 40px;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff
+}
+
+h4 {
+    margin-bottom: 20px;
+    color: #ffffff
+}
+.wrapper p {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-message {
+    text-align: center;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.login-link {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.question-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.question-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.question-list li a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.question-list li button {
+    background: transparent;
+    color: #1b1b1b;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
 .logout-button {
     position: fixed;
     bottom: 20px;

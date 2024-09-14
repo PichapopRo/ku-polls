@@ -23,6 +23,9 @@
 <p><a href="{% url 'polls:index' %}">Back to List of Polls</a></p>
 
 <footer>
+<button class="back-to-poll-button" href="{% url 'polls:index' %}">
+        Back to List of Polls
+    </button>
     {% if user.is_authenticated %} 
     <form action="{% url 'logout' %}" method="post" class="logout-button">
         {% csrf_token %}
