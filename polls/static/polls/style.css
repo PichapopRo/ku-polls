@@ -94,13 +94,15 @@ h4 {
 }
 
 .logout-button button {
-    background-color: #ffffff;
-    color: black;
-    border: none;
+    background-color: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, .2);
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .logout-button button:hover {
