@@ -1,31 +1,35 @@
+<body>
+<div class="wrapper">
 {% load static %}
-
-<link rel="stylesheet" href="{% static 'polls/style.css' %}">
-<form action="{% url 'polls:vote' question.id %}" method="post">
+<link rel="stylesheet" href="{% static 'polls/detail_style.css' %}">
+<form action="{% url 'polls:vote' question.id %}" method="post" class="selected-choice">
     {% csrf_token %}
-    <fieldset>
-        <legend><h1>{{ question.question_text }}</h1></legend>
+        <h1>{{ question.question_text }}</h1>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-        {% for choice in question.choice_set.all %}
-            <input 
-                type="radio" 
-                name="choice" 
-                id="choice{{ forloop.counter }}" 
-                value="{{ choice.id }}"
-                {% if choice.id == user_vote %}checked{% endif %}>
-            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        <ul class="choice-list">  {% for choice in question.choice_set.all %}
+            <li>
+                <input 
+                    type="radio" 
+                    name="choice" 
+                    id="choice{{ forloop.counter }}" 
+                    value="{{ choice.id }}"
+                    {% if choice.id == user_vote %}checked{% endif %}>
+                <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+            </li>
         {% endfor %}
-    </fieldset>
-    <input type="submit" value="Vote">
+        </ul>
+    <input type="submit" value="Vote" class="vote-button">
 </form>
+<button type="submit" class="result-button">
+          <a href="{% url 'polls:results' question.id %}">View Results</a>
+        </button>
 
-<p><a href="{% url 'polls:results' question.id %}">View Results</a></p>
-<p><a href="{% url 'polls:index' %}">Back to List of Polls</a></p>
-
+<button type="submit" class="back-to-list-poll-button">
+    <a href="{% url 'polls:index' %}">Back to list Polls </a>
+        </button>
+</div>
+</body>
 <footer>
-<button class="back-to-poll-button" href="{% url 'polls:index' %}">
-        Back to List of Polls
-    </button>
     {% if user.is_authenticated %} 
     <form action="{% url 'logout' %}" method="post" class="logout-button">
         {% csrf_token %}
