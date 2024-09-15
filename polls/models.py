@@ -12,6 +12,7 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=20, default='active', editable=True)
 
     def was_published_recently(self):
         """Check whether this question has been published recently."""
