@@ -3,14 +3,13 @@
 <body>
 <div class="wrapper">
 {% if messages %}
-<ul class="messages">
-  {% for msg in messages %}
-    <li class="{{msg.tags}}">{{ msg }}</li>
-  {% endfor %}
-</ul>
 {% endif %}
 <h1>{{ question.question_text }}</h1>
-
+<ul class="messages">
+  {% for msg in messages %}
+    <div class="{{msg.tags}}">{{ msg }}</div>
+  {% endfor %}
+</ul>
 <table>
     <thead>
         <tr>

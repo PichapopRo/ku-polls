@@ -20,6 +20,15 @@ h1 {
     text-align: center;
 }
 
+.messages {
+    list-style-type: disc;
+    padding-bottom: 20px;
+}
+
+.messages div {
+    color: #fff;
+}
+
 .wrapper {
     width: 80%;
     max-width: 800px;
