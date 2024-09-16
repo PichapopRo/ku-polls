@@ -6,15 +6,13 @@ omit =
     .local/*
     env/*
     */__init__.py  # Ignore package initialization files
-    migrations/* # Ignore Django migration files
+    */migrations/* # Ignore Django migration files
     mysite/*
     manage.py      # Ignore manage.py file
     staticfiles/*
     admin.py
     apps.py
     urls.py
-include =
-    polls/*
 [report]
 # Ignore special methods like __str__ and __repr__
 exclude_lines =
